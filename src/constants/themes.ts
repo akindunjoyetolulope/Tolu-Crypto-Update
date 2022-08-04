@@ -4,9 +4,10 @@ const themes: AppThemeConfig = {
     colors: {
         prime: "#16CB3E",
         lightGrey: "#F1F1F1",
-        dark: "#000639",
+        dark: "#282C34",
         white: "#FFFFFF",
         red: "#E94A3F",
+        yellow:'#FFE564',
         grey: "#5A5C5E",
         blue: "#3747EC",
         transparent: "transparent",
@@ -18,6 +19,7 @@ const themes: AppThemeConfig = {
         lightGreen: "#D0F5D8",
         lightRed: "#E94A3F1A",
         lighterGreen: "#E8FAEC",
+        lightyellow: '#FFF7D1',
       },
       shadows: {
         dark: "0px 25px 44px -5px rgba(114, 118, 150, 0.6)",
