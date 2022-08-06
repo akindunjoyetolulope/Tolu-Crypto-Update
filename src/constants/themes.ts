@@ -11,7 +11,7 @@ const themes: AppThemeConfig = {
         grey: "#5A5C5E",
         blue: "#3747EC",
         transparent: "transparent",
-        
+        green: "#006400",
       },
       backgroundColors: {
         greyscale: "#F0F3F5",
