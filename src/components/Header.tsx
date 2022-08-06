@@ -1,6 +1,6 @@
 import React from 'react';
-
-import Button from '../components/Button';
+import themes from '../constants/themes';
+import styled from "@emotion/styled";
 import './header.css';
 
 type User = {
@@ -9,13 +9,13 @@ type User = {
 
 interface HeaderProps {
   user?: User;
-  onLogin: () => void;
-  onLogout: () => void;
-  onCreateAccount: () => void;
+  // onLogin: () => void;
+  // onLogout: () => void;
+  // onCreateAccount: () => void;
 }
 
-export const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => (
-  <header>
+export const Header = ({ user }: HeaderProps) => (
+  <HeaderEl>
     <div className="wrapper">
       <div>
         <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
@@ -34,7 +34,7 @@ export const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps
             />
           </g>
         </svg>
-        <h1>Acme</h1>
+        <h1>{user?.name || <Span>Tolu CryptoUpdate</Span> }</h1>
       </div>
       {/* <div>
         {user ? (
@@ -52,5 +52,16 @@ export const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps
         )}
       </div> */}
     </div>
-  </header>
+  </HeaderEl>
 );
+
+const HeaderEl = styled.header`
+  background-color: ${themes.backgroundColors.lightGrey}
+  border: ${themes.colors.red}
+`
+
+
+const Span = styled.span`
+  border-left: 2px solid red;
+  padding-left: 10px;
+`

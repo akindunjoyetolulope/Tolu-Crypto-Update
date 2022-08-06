@@ -9,6 +9,7 @@ export interface AppThemeConfig {
       yellow:string;
       transparent: string;
       blue: string;
+      green:string;
     };
     backgroundColors: {
       greyscale: string;
