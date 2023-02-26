@@ -1,7 +1,7 @@
 import { Header } from "../components/Header";
 import SubHeader from "../components/SubHeader";
 import styled from "@emotion/styled";
-import themes from "../constants/themes";
+import media from "../styles/media";
 
 // interface Data {
 //     data: object[]
@@ -9,7 +9,7 @@ import themes from "../constants/themes";
 
 const DummyData = [
   {
-    id:1,
+    id: 1,
     name: "BTC",
     price: "$ 1,000,000",
     imaUrl:
@@ -17,7 +17,7 @@ const DummyData = [
     rate: " - 5.88 %",
   },
   {
-    id:2,
+    id: 2,
     name: "BTC",
     price: "$ 1,000,000",
     imaUrl:
@@ -25,7 +25,7 @@ const DummyData = [
     rate: " - 5.88 %",
   },
   {
-    id:3,
+    id: 3,
     name: "BTC",
     price: "$ 1,000,000",
     imaUrl:
@@ -33,7 +33,7 @@ const DummyData = [
     rate: " - 5.88 %",
   },
   {
-    id:4,
+    id: 4,
     name: "BTC",
     price: "$ 1,000,000",
     imaUrl:
@@ -41,7 +41,7 @@ const DummyData = [
     rate: " - 5.88 %",
   },
   {
-    id:5,
+    id: 5,
     name: "BTC",
     price: "$ 1,000,000",
     imaUrl:
@@ -56,30 +56,29 @@ const AllCoinPage = () => {
       <Header />
       <div className="app">
         <SubHeader />
-        <div className="app">
-          <h1> Top 5 Trending Coins</h1>
-          <ListGroupEl>
-            {DummyData.map((data) => (
-              <li key={data.id}>
-                <div className="coinName">
-                  <ImgBox>
-                    <img
-                      width="30px"
-                      height="30px"
-                      src={data.imaUrl}
-                      alt="coin pic"
-                    />
-                  </ImgBox>
-                  <span>{data.name}</span>
+        <div>
+          <h3>Trending Coins </h3>
+          <CardContainer>
+            <div className="row">
+              {DummyData.map((data) => (
+                <div className="card" key={data.id}>
+                  <div className="card-text">
+                    <ImgBox>
+                      <img
+                        width="50px"
+                        height="50px"
+                        src={data.imaUrl}
+                        alt="coin pic"
+                      />
+                    </ImgBox>
+                    <p>
+                      {data.name} <br /> {data.price}
+                    </p>
+                  </div>
                 </div>
-                <PriceBox>
-                  <p>
-                    {data.price} <span className="rate">({data.rate})</span>
-                  </p>
-                </PriceBox>
-              </li>
-            ))}
-          </ListGroupEl>
+              ))}
+            </div>
+          </CardContainer>
         </div>
       </div>
     </>
@@ -88,40 +87,65 @@ const AllCoinPage = () => {
 
 export default AllCoinPage;
 
-const ListGroupEl = styled.ul`
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  border-radius: 14px;
-  margin: 10px;
-
-  li {
-    border: 1px solid ${themes.colors.green};
-    margin-top: -1px; /* Prevent double borders */
-    background-color: ${themes.colors.lightGrey};
-    padding: 1px;
-    display: flex;
-    justify-content: space-between;
-
-    .coinName {
-      display: flex;
-      span {
-        margin: auto 0px;
-        font-size: 18px;
-      }
-    }
-  }
-`;
-
 const ImgBox = styled.div`
   padding: 1px;
-  margin: auto 5px auto 5px;
+  margin: auto;
 `;
 
-const PriceBox = styled.div`
-  font-size: 14px;
-  margin: 0px 5px 0px 0px;
-  .rate {
-    color: ${themes.colors.green};
+const CardContainer = styled.div`
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  ::-webkit-scrollbar {
+    width: 0 !important;
+  }
+
+  .row {
+    align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: 1;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    gap: 10px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    &::-webkit-scrollbar {
+      width: 0 !important;
+    }
+  }
+  .card {
+    border-radius: 12px;
+    background: black;
+    color: white;
+    width: 300px;
+    height: 150px;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 0;
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+  ${media.mobile} {
+    .card {
+      border-radius: 12px;
+      background: black;
+      color: white;
+      width: 200px;
+      height: 200px;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 0;
+      flex-basis: auto;
+      flex-grow: 0;
+      flex-shrink: 0;
+    }
+  }
+  .card-text {
+    text-align: center;
   }
 `;

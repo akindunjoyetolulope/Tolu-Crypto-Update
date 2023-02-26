@@ -1,7 +1,7 @@
-import React from 'react';
-import themes from '../constants/themes';
+import React from "react";
+import themes from "../constants/themes";
 import styled from "@emotion/styled";
-import './header.css';
+import "./header.css";
 
 type User = {
   name: string;
@@ -18,7 +18,12 @@ export const Header = ({ user }: HeaderProps) => (
   <HeaderEl>
     <div className="wrapper">
       <div>
-        <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          width="32"
+          height="32"
+          viewBox="0 0 32 32"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <g fill="none" fillRule="evenodd">
             <path
               d="M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z"
@@ -34,7 +39,7 @@ export const Header = ({ user }: HeaderProps) => (
             />
           </g>
         </svg>
-        <h1>{user?.name || <Span>Tolu CryptoUpdate</Span> }</h1>
+        <h1>Crypto Update</h1>
       </div>
       {/* <div>
         {user ? (
@@ -56,12 +61,11 @@ export const Header = ({ user }: HeaderProps) => (
 );
 
 const HeaderEl = styled.header`
-  background-color: ${themes.backgroundColors.lightGrey}
-  border: ${themes.colors.red}
-`
-
+  background-color: ${themes.backgroundColors.lightGrey};
+  border: ${themes.colors.red};
+`;
 
 const Span = styled.span`
   border-left: 2px solid red;
   padding-left: 10px;
-`
+`;

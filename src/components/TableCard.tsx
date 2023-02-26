@@ -1,8 +1,6 @@
 import * as React from "react";
 import styled from "@emotion/styled";
-import themes from '../constants/themes';
-
-
+import themes from "../constants/themes";
 
 interface Props extends React.BaseHTMLAttributes<HTMLDivElement> {
   id: string;
@@ -16,21 +14,15 @@ interface Props extends React.BaseHTMLAttributes<HTMLDivElement> {
 }
 
 function TableCard(props: Props) {
-  const {
-    name,
-    imgUrl,
-    coinPrice,
-    dipStatus,
-    action,
-    onAction,
-    url,
-    ...rest
-  } = props;
+  const { name, imgUrl, coinPrice, dipStatus, action, onAction, url, ...rest } =
+    props;
 
-  const onItemClicked = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const onItemClicked = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     event.stopPropagation();
     onAction && onAction(props.id);
-  }
+  };
 
   return (
     <Container role="button" {...rest}>
@@ -44,7 +36,9 @@ function TableCard(props: Props) {
         </div>
         <div className="second">
           <div>dip status</div>
-          <div><button onClick={onItemClicked}>{action || 'Open'}</button></div>
+          <div>
+            <button onClick={onItemClicked}>{action || "Open"}</button>
+          </div>
         </div>
       </DescriptionBox>
     </Container>
@@ -58,29 +52,27 @@ const Container = styled.div`
   padding: 8px;
   border-style: double;
   margin: auto;
-  background: ${themes.backgroundColors.lightGrey}
+  background: ${themes.backgroundColors.lightGrey};
   border: 1px solid #e6e7e7;
   border-radius: 8px;
 `;
 
 const ImgBox = styled.div`
- padding:8px;
+  padding: 8px;
 `;
 
 const DescriptionBox = styled.div`
-
-width:100%;
-  .first{
-    display:flex;
+  width: 100%;
+  .first {
+    display: flex;
     justify-content: space-between;
     font-size: 16px;
-    padding:6px;
-   
+    padding: 6px;
   }
 
-  .second{
-    display:flex;
+  .second {
+    display: flex;
     justify-content: space-between;
-    padding:6px;
+    padding: 6px;
   }
 `;

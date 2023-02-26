@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 * {
@@ -12,7 +14,7 @@ body {
 }
 
 .app {
-  width: 75%;
+  width: 85%;
   margin: 20px auto;
 }
 
