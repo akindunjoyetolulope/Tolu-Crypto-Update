@@ -67,14 +67,14 @@ const TableEL = styled.table`
   border-collapse: collapse;
   border-spacing: 0;
   width: 100%;
-  
 
   thead > tr {
     height: 54px;
   }
 
   th {
-    color: ${themes.colors.red};
+    background-color: ${themes.colors.lightGrey};
+    color: ${themes.colors.black};
     font-size: 1.2rem;
     font-weight: 600;
     text-align: left;

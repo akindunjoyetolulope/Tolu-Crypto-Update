@@ -2,10 +2,10 @@ import { Header } from "../components/Header";
 import SubHeader from "../components/SubHeader";
 import styled from "@emotion/styled";
 import media from "../styles/media";
-
-// interface Data {
-//     data: object[]
-// }
+import Table from "../components/Table";
+import { useState } from "react";
+import TrendingCard from "../components/TrendingCards";
+import axios from "axios";
 
 const DummyData = [
   {
@@ -51,35 +51,37 @@ const DummyData = [
 ];
 
 const AllCoinPage = () => {
+  const [coins, setCoins] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+
   return (
     <>
       <Header />
       <div className="app">
         <SubHeader />
         <div>
-          <h3>Trending Coins </h3>
-          <CardContainer>
-            <div className="row">
-              {DummyData.map((data) => (
-                <div className="card" key={data.id}>
-                  <div className="card-text">
-                    <ImgBox>
-                      <img
-                        width="50px"
-                        height="50px"
-                        src={data.imaUrl}
-                        alt="coin pic"
-                      />
-                    </ImgBox>
-                    <p>
-                      {data.name} <br /> {data.price}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContainer>
+          <TrendingCard />
         </div>
+        <None>
+          <h3>Cryptocurrency Prices by Market Cap</h3>
+          <StyledTable
+            headings={[
+              { content: "Coin" },
+              { content: "Amount" },
+              { content: "24h change" },
+              { content: "Market Cap", alighCenter: true },
+            ]}
+          >
+            <Table.Row>
+              <Table.Cell></Table.Cell>
+              <Table.Cell></Table.Cell>
+              <Table.Cell></Table.Cell>
+              <Table.Cell></Table.Cell>
+            </Table.Row>
+          </StyledTable>
+        </None>
       </div>
     </>
   );
@@ -87,65 +89,17 @@ const AllCoinPage = () => {
 
 export default AllCoinPage;
 
-const ImgBox = styled.div`
-  padding: 1px;
-  margin: auto;
-`;
-
-const CardContainer = styled.div`
-  ::-webkit-scrollbar {
+const None = styled.div`
+  ${media.mobile} {
     display: none;
   }
-  ::-webkit-scrollbar {
-    width: 0 !important;
-  }
+`;
 
-  .row {
-    align-items: stretch;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    overflow-x: 1;
-    overflow-y: hidden;
-    scrollbar-width: none;
-    gap: 10px;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    &::-webkit-scrollbar {
-      width: 0 !important;
-    }
-  }
-  .card {
-    border-radius: 12px;
-    background: black;
-    color: white;
-    width: 300px;
-    height: 150px;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    border: 0;
-    flex-basis: auto;
-    flex-grow: 0;
-    flex-shrink: 0;
-  }
+const StyledTable = styled(Table)`
   ${media.mobile} {
-    .card {
-      border-radius: 12px;
-      background: black;
-      color: white;
-      width: 200px;
-      height: 200px;
-      padding: 0.75rem;
-      margin-bottom: 1rem;
-      border: 0;
-      flex-basis: auto;
-      flex-grow: 0;
-      flex-shrink: 0;
-    }
+    display: none;
   }
-  .card-text {
-    text-align: center;
+  table {
+    min-width: 70rem;
   }
 `;
