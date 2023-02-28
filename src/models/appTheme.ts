@@ -52,3 +52,19 @@ export interface Data {
   roi: null;
   last_updated: string;
 }
+
+export interface Coin {
+  id: string;
+  symbol: string;
+  name: string;
+  image: {
+    large: string;
+  };
+  market_data: any;
+  market_cap: number;
+  market_cap_rank: number;
+  description: {
+    en: string;
+  };
+  rice_change_percentage_24h: number;
+}
