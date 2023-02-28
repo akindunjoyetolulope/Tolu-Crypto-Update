@@ -2,6 +2,7 @@ import React from "react";
 import themes from "../constants/themes";
 import styled from "@emotion/styled";
 import "./header.css";
+import { Link } from "react-router-dom";
 
 type User = {
   name: string;
@@ -9,9 +10,6 @@ type User = {
 
 interface HeaderProps {
   user?: User;
-  // onLogin: () => void;
-  // onLogout: () => void;
-  // onCreateAccount: () => void;
 }
 
 export const Header = ({ user }: HeaderProps) => (
@@ -39,23 +37,10 @@ export const Header = ({ user }: HeaderProps) => (
             />
           </g>
         </svg>
-        <h1>Crypto Update</h1>
+        <Link to={"/"}>
+          <h1>Crypto Update</h1>
+        </Link>
       </div>
-      {/* <div>
-        {user ? (
-          <>
-            <span className="welcome">
-              Welcome, <b>{user.name}</b>!
-            </span>
-            <Button size="small" onClick={onLogout} label="Log out" />
-          </>
-        ) : (
-          <>
-            <Button size="small" onClick={onLogin} label="Log in" />
-            <Button primary size="small" onClick={onCreateAccount} label="Sign up" />
-          </>
-        )}
-      </div> */}
     </div>
   </HeaderEl>
 );
@@ -63,6 +48,11 @@ export const Header = ({ user }: HeaderProps) => (
 const HeaderEl = styled.header`
   background-color: ${themes.backgroundColors.lightGrey};
   border: ${themes.colors.red};
+
+  a {
+    text-decoration: none;
+    color: ${themes.colors.black};
+  }
 `;
 
 const Span = styled.span`

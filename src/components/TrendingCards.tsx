@@ -5,13 +5,15 @@ import { useEffect, useState } from "react";
 import { TrendingCoins } from "../api/api";
 import { Data } from "../models/appTheme";
 import { numberWithCommas } from "../helpers/helper";
+import { Link } from "react-router-dom";
+import { CryptoState } from "../provider/CryotoProvider";
 
 const TrendingCard = () => {
   const [trending, setTrending] = useState<Data[]>([]);
-  // const { currency, symbol } = CryptoState();
+  const { currency, symbol } = CryptoState();
 
   const fetchTrendingCoins = async () => {
-    const { data } = await axios.get(TrendingCoins("USD"));
+    const { data } = await axios.get(TrendingCoins(currency));
 
     console.log(data);
     setTrending(data);
@@ -27,40 +29,43 @@ const TrendingCard = () => {
       <CardContainer>
         <div className="row">
           {trending.map((data) => (
-            <div className="card" key={data.id}>
-              <div className="card-text">
-                <ImgBox>
-                  <img
-                    width="50px"
-                    height="50px"
-                    src={data.image}
-                    alt="coin pic"
-                  />
-                </ImgBox>
-                <p>
-                  <span>
-                    {data?.symbol.toLocaleUpperCase()}
-                    &nbsp;
-                    <span
-                      style={{
-                        color:
-                          data?.price_change_percentage_24h >= 0
-                            ? "rgb(14, 203, 129)"
-                            : "red",
-                        fontWeight: 500,
-                      }}
-                    >
-                      {data?.price_change_percentage_24h >= 0 && "+"}
-                      {data?.price_change_percentage_24h?.toFixed(2)}%
+            <Link key={data.id} to={`/coin/${data.id}`}>
+              <div className="card">
+                <div className="card-text">
+                  <ImgBox>
+                    <img
+                      width="50px"
+                      height="50px"
+                      src={data.image}
+                      alt="coin pic"
+                    />
+                  </ImgBox>
+                  <p>
+                    <span>
+                      {data?.symbol.toLocaleUpperCase()}
+                      &nbsp;
+                      <span
+                        style={{
+                          color:
+                            data?.price_change_percentage_24h >= 0
+                              ? "rgb(14, 203, 129)"
+                              : "red",
+                          fontWeight: 500,
+                        }}
+                      >
+                        {data?.price_change_percentage_24h >= 0 && "+"}
+                        {data?.price_change_percentage_24h?.toFixed(2)}%
+                      </span>
+                      <br />
                     </span>
-                    <br />
-                  </span>
-                  <span style={{ fontSize: 22, fontWeight: 500 }}>
-                    {"#"} {numberWithCommas(data?.current_price.toFixed(2))}
-                  </span>
-                </p>
+                    <span style={{ fontSize: 22, fontWeight: 500 }}>
+                      {symbol}{" "}
+                      {numberWithCommas(data?.current_price.toFixed(2))}
+                    </span>
+                  </p>
+                </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </CardContainer>
@@ -98,6 +103,9 @@ const CardContainer = styled.div`
     }
     &::-webkit-scrollbar {
       width: 0 !important;
+    }
+    a {
+      text-decoration: none;
     }
   }
   .card {
