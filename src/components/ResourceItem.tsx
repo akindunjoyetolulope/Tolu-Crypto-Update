@@ -149,4 +149,7 @@ export const ResourceItemWrapper = styled.div`
   ${media.mobile} {
     display: block;
   }
+  ${media.smallDesktop} {
+    display: block;
+  }
 `;

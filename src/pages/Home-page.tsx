@@ -194,6 +194,9 @@ const StyledTable = styled(Table)`
   ${media.mobile} {
     display: none;
   }
+  ${media.smallDesktop} {
+    display: none;
+  }
   table {
     min-width: 70rem;
   }
