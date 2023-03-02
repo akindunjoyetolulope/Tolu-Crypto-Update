@@ -9,49 +9,10 @@ import axios from "axios";
 import { CryptoState } from "../provider/CryotoProvider";
 import { CoinList } from "../api/api";
 import { Data } from "../models/appTheme";
-
-const DummyData = [
-  {
-    id: 1,
-    name: "BTC",
-    price: "$ 1,000,000",
-    imaUrl:
-      "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
-    rate: " - 5.88 %",
-  },
-  {
-    id: 2,
-    name: "BTC",
-    price: "$ 1,000,000",
-    imaUrl:
-      "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
-    rate: " - 5.88 %",
-  },
-  {
-    id: 3,
-    name: "BTC",
-    price: "$ 1,000,000",
-    imaUrl:
-      "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
-    rate: " - 5.88 %",
-  },
-  {
-    id: 4,
-    name: "BTC",
-    price: "$ 1,000,000",
-    imaUrl:
-      "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
-    rate: " - 5.88 %",
-  },
-  {
-    id: 5,
-    name: "BTC",
-    price: "$ 1,000,000",
-    imaUrl:
-      "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579",
-    rate: " - 5.88 %",
-  },
-];
+import { numberWithCommas } from "../helpers/helper";
+import { useNavigate } from "react-router-dom";
+import themes from "../constants/themes";
+import ResourceItem, { ResourceItemWrapper } from "../components/ResourceItem";
 
 const HomePage = () => {
   const [coins, setCoins] = useState<Data[]>([]);
@@ -64,7 +25,6 @@ const HomePage = () => {
   const fetchCoins = async () => {
     setLoading(true);
     const { data } = await axios.get(CoinList(currency));
-    console.log(data);
 
     setCoins(data);
     setLoading(false);
@@ -74,6 +34,8 @@ const HomePage = () => {
     fetchCoins();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currency]);
+
+  const navigate = useNavigate();
 
   const handleSearch = () => {
     return coins.filter(
@@ -88,23 +50,33 @@ const HomePage = () => {
       <Header />
       <div className="app">
         <SubHeader />
-        <div>
-          <TrendingCard />
-        </div>
-        <None>
+        <TrendingCard />
+        <InputEl>
+          <input
+            type="text"
+            name="firstname"
+            placeholder="Search For a Crypto Currency.."
+            autoComplete="off"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </InputEl>
+        <Container>
           <h3>Cryptocurrency Prices by Market Cap</h3>
           <StyledTable
             headings={[
               { content: "Coin" },
               { content: "Amount" },
               { content: "24h change" },
-              { content: "Market Cap", alighCenter: true },
+              { content: "Market Cap" },
             ]}
           >
             {handleSearch()
               .slice((page - 1) * 10, (page - 1) * 10 + 10)
               .map((row) => (
-                <Table.Row>
+                <Table.Row
+                  onClick={() => navigate(`/coin/${row.id}`)}
+                  key={row.id}
+                >
                   <Table.Cell>
                     <div style={{ display: "flex" }}>
                       <img
@@ -132,7 +104,9 @@ const HomePage = () => {
                       </div>
                     </div>
                   </Table.Cell>
-                  <Table.Cell></Table.Cell>
+                  <Table.Cell>
+                    {symbol} {numberWithCommas(row.current_price.toFixed(2))}
+                  </Table.Cell>
                   <Table.Cell
                     style={{
                       color:
@@ -145,11 +119,48 @@ const HomePage = () => {
                     {row?.price_change_percentage_24h >= 0 && "+"}
                     {row?.price_change_percentage_24h?.toFixed(2)}%
                   </Table.Cell>
-                  <Table.Cell></Table.Cell>
+                  <Table.Cell>
+                    {symbol}{" "}
+                    {numberWithCommas(row.market_cap.toString().slice(0, -6))}
+                  </Table.Cell>
                 </Table.Row>
               ))}
           </StyledTable>
-        </None>
+
+          <ResourceItemWrapper>
+            {handleSearch()
+              .slice((page - 1) * 10, (page - 1) * 10 + 10)
+              .map((row) => (
+                <ResourceItem
+                  key={row.id}
+                  id={row.id}
+                  imageUrl={row.image}
+                  itemTitle={row.name}
+                  subTitle={
+                    <>
+                      {symbol} {numberWithCommas(row.current_price.toFixed(2))}
+                    </>
+                  }
+                  description={
+                    <div
+                      style={{
+                        color:
+                          row?.price_change_percentage_24h >= 0
+                            ? "rgb(14, 203, 129)"
+                            : "red",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {" "}
+                      {row?.price_change_percentage_24h >= 0 && "+"}
+                      {row?.price_change_percentage_24h?.toFixed(2)}%
+                    </div>
+                  }
+                  onAction={() => navigate(`/coin/${row.id}`)}
+                />
+              ))}
+          </ResourceItemWrapper>
+        </Container>
       </div>
     </>
   );
@@ -157,13 +168,29 @@ const HomePage = () => {
 
 export default HomePage;
 
-const None = styled.div`
-  ${media.mobile} {
+const Container = styled.div`
+  width: 100%;
+  margin-top: 20px;
+`;
+
+const InputEl = styled.div`
+  /* ${media.mobile} {
     display: none;
+  } */
+
+  input[type="text"] {
+    width: 100%;
+    padding: 14px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 2px solid ${themes.colors.grey};
+    border-radius: 4px;
+    box-sizing: border-box;
   }
 `;
 
 const StyledTable = styled(Table)`
+  margin-top: 2rem;
   ${media.mobile} {
     display: none;
   }
