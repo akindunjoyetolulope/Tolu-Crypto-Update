@@ -12,10 +12,10 @@ interface Props extends React.TableHTMLAttributes<HTMLTableElement> {
 }
 
 function Table(props: React.PropsWithChildren<Props>) {
-  const { headings, children } = props;
+  const { headings, children, className } = props;
 
   return (
-    <Container>
+    <Container className={className}>
       <TableEL>
         <thead>
           <tr>
@@ -60,7 +60,7 @@ const Container = styled.div`
   font-family: Arial, Helvetica, sans-serif;
   width: 100%;
   border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid ${themes.colors.lightGrey};
   overflow-x: auto;
 `;
 const TableEL = styled.table`
@@ -98,7 +98,7 @@ const TableRowEl = styled.tr`
   font-family: Arial, Helvetica, sans-serif;
   height: 70px;
   cursor: pointer;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  border-top: 1px solid ${themes.colors.lightGrey};
   background-color: transparent;
 
   &:hover {

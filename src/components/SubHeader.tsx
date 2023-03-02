@@ -18,5 +18,5 @@ const SubHeaderEl = styled.div`
   margin: auto;
   border-radius: 14px;
   background-color: ${themes.colors.lightGrey};
-  border: 2px solid ${themes.colors.lightGrey};
+  border: 2px solid ${themes.colors.grey};
 `;

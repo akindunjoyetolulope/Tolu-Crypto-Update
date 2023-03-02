@@ -2,7 +2,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./components/error-page";
 import CoinDetails from "./pages/Coin-details";
 import HomePage from "./pages/Home-page";
-import CryptoContext from "./provider/CryotoProvider";
 
 const router = createBrowserRouter([
   {

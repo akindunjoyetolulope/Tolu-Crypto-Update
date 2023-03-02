@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { Header } from "../components/Header";
 import { useParams } from "react-router-dom";
 import media from "../styles/media";
-import { Line } from "react-chartjs-2";
 import themes from "../constants/themes";
 import { useEffect, useState } from "react";
 import { SingleCoin } from "../api/api";
@@ -25,8 +24,6 @@ const CoinDetails = () => {
     fetchCoin();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log("🚀 ~ file: Coin-details.tsx:22 ~ fetchCoin ~ data:", coin);
 
   return (
     <>

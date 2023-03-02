@@ -47,15 +47,10 @@ export const Header = ({ user }: HeaderProps) => (
 
 const HeaderEl = styled.header`
   background-color: ${themes.backgroundColors.lightGrey};
-  border: ${themes.colors.red};
+  border: ${themes.colors.lightGrey};
 
   a {
     text-decoration: none;
     color: ${themes.colors.black};
   }
-`;
-
-const Span = styled.span`
-  border-left: 2px solid red;
-  padding-left: 10px;
 `;
