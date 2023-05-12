@@ -13,6 +13,8 @@ import { numberWithCommas } from "../helpers/helper";
 import { useNavigate } from "react-router-dom";
 import themes from "../constants/themes";
 import ResourceItem, { ResourceItemWrapper } from "../components/ResourceItem";
+import { Pagination } from "@mui/lab";
+import HomepageSkeleton from "./components/HomepageSkeleton";
 
 const HomePage = () => {
   const [coins, setCoins] = useState<Data[]>([]);
@@ -62,104 +64,137 @@ const HomePage = () => {
         </InputEl>
         <Container>
           <h3>Cryptocurrency Prices by Market Cap</h3>
-          <StyledTable
-            headings={[
-              { content: "Coin" },
-              { content: "Amount" },
-              { content: "24h change" },
-              { content: "Market Cap" },
-            ]}
-          >
-            {handleSearch()
-              .slice((page - 1) * 10, (page - 1) * 10 + 10)
-              .map((row) => (
-                <Table.Row
-                  onClick={() => navigate(`/coin/${row.id}`)}
-                  key={row.id}
+          <>
+            {loading ? (
+              <div style={{ marginTop: "20px" }}>
+                <HomepageSkeleton />
+              </div>
+            ) : (
+              <>
+                <StyledTable
+                  headings={[
+                    { content: "Coin" },
+                    { content: "Amount" },
+                    { content: "24h change" },
+                    { content: "Market Cap" },
+                  ]}
                 >
-                  <Table.Cell>
-                    <div style={{ display: "flex" }}>
-                      <img
-                        src={row.image}
-                        alt={row.name}
-                        height="40"
-                        style={{ marginBottom: 10, marginRight: 5 }}
-                      />
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          justifyContent: "center",
-                        }}
+                  {handleSearch()
+                    .slice((page - 1) * 10, (page - 1) * 10 + 10)
+                    .map((row) => (
+                      <Table.Row
+                        onClick={() => navigate(`/coin/${row.id}`)}
+                        key={row.id}
                       >
-                        <span
+                        <Table.Cell>
+                          <div style={{ display: "flex" }}>
+                            <img
+                              src={row.image}
+                              alt={row.name}
+                              height="40"
+                              style={{ marginBottom: 10, marginRight: 5 }}
+                            />
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <span
+                                style={{
+                                  textTransform: "uppercase",
+                                  fontSize: 14,
+                                }}
+                              >
+                                {row.symbol}
+                              </span>
+                              <span style={{ color: "darkgrey" }}>
+                                {row.name}
+                              </span>
+                            </div>
+                          </div>
+                        </Table.Cell>
+                        <Table.Cell>
+                          {symbol}{" "}
+                          {numberWithCommas(row.current_price.toFixed(2))}
+                        </Table.Cell>
+                        <Table.Cell
                           style={{
-                            textTransform: "uppercase",
-                            fontSize: 14,
+                            color:
+                              row?.price_change_percentage_24h >= 0
+                                ? "rgb(14, 203, 129)"
+                                : "red",
+                            fontWeight: 500,
                           }}
                         >
-                          {row.symbol}
-                        </span>
-                        <span style={{ color: "darkgrey" }}>{row.name}</span>
-                      </div>
-                    </div>
-                  </Table.Cell>
-                  <Table.Cell>
-                    {symbol} {numberWithCommas(row.current_price.toFixed(2))}
-                  </Table.Cell>
-                  <Table.Cell
-                    style={{
-                      color:
-                        row?.price_change_percentage_24h >= 0
-                          ? "rgb(14, 203, 129)"
-                          : "red",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {row?.price_change_percentage_24h >= 0 && "+"}
-                    {row?.price_change_percentage_24h?.toFixed(2)}%
-                  </Table.Cell>
-                  <Table.Cell>
-                    {symbol}{" "}
-                    {numberWithCommas(row.market_cap.toString().slice(0, -6))}
-                  </Table.Cell>
-                </Table.Row>
-              ))}
-          </StyledTable>
+                          {row?.price_change_percentage_24h >= 0 && "+"}
+                          {row?.price_change_percentage_24h?.toFixed(2)}%
+                        </Table.Cell>
+                        <Table.Cell>
+                          {symbol}{" "}
+                          {numberWithCommas(
+                            row.market_cap.toString().slice(0, -6)
+                          )}
+                        </Table.Cell>
+                      </Table.Row>
+                    ))}
+                </StyledTable>
 
-          <ResourceItemWrapper>
-            {handleSearch()
-              .slice((page - 1) * 10, (page - 1) * 10 + 10)
-              .map((row) => (
-                <ResourceItem
-                  key={row.id}
-                  id={row.id}
-                  imageUrl={row.image}
-                  itemTitle={row.name}
-                  subTitle={
-                    <>
-                      {symbol} {numberWithCommas(row.current_price.toFixed(2))}
-                    </>
-                  }
-                  description={
-                    <div
-                      style={{
-                        color:
-                          row?.price_change_percentage_24h >= 0
-                            ? "rgb(14, 203, 129)"
-                            : "red",
-                        fontWeight: 500,
-                      }}
-                    >
-                      {" "}
-                      {row?.price_change_percentage_24h >= 0 && "+"}
-                      {row?.price_change_percentage_24h?.toFixed(2)}%
-                    </div>
-                  }
-                  onAction={() => navigate(`/coin/${row.id}`)}
+                <ResourceItemWrapper>
+                  {handleSearch()
+                    .slice((page - 1) * 10, (page - 1) * 10 + 10)
+                    .map((row) => (
+                      <ResourceItem
+                        key={row.id}
+                        id={row.id}
+                        imageUrl={row.image}
+                        itemTitle={row.name}
+                        subTitle={
+                          <>
+                            {symbol}{" "}
+                            {numberWithCommas(row.current_price.toFixed(2))}
+                          </>
+                        }
+                        description={
+                          <div
+                            style={{
+                              color:
+                                row?.price_change_percentage_24h >= 0
+                                  ? "rgb(14, 203, 129)"
+                                  : "red",
+                              fontWeight: 500,
+                            }}
+                          >
+                            {" "}
+                            {row?.price_change_percentage_24h >= 0 && "+"}
+                            {row?.price_change_percentage_24h?.toFixed(2)}%
+                          </div>
+                        }
+                        onAction={() => navigate(`/coin/${row.id}`)}
+                      />
+                    ))}
+                </ResourceItemWrapper>
+
+                {/* Comes from @material-ui/lab */}
+
+                <Pagination
+                  count={+(handleSearch()?.length / 10).toFixed(0)}
+                  style={{
+                    padding: 5,
+                    marginTop: 20,
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                  onChange={(_, value) => {
+                    setPage(value);
+                    window.scroll(0, 450);
+                  }}
                 />
-              ))}
-          </ResourceItemWrapper>
+              </>
+            )}
+          </>
         </Container>
       </div>
     </>
