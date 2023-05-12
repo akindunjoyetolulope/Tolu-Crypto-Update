@@ -128,6 +128,12 @@ const CardContainer = styled.div`
   }
 
   .card-loader {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    @keyframes pulse {
+      50% {
+        opacity: 0.5;
+      }
+    }
     border-radius: 12px;
     background: ${themes.colors.lightGrey};
     color: ${themes.colors.black};
@@ -162,7 +168,7 @@ const CardContainer = styled.div`
     border-radius: 12px;
     background: ${themes.colors.black};
     color: ${themes.colors.white};
-    width: 300px;
+    width: 320px;
     height: 150px;
     padding: 0.75rem;
     margin-bottom: 1rem;
